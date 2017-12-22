@@ -24,8 +24,25 @@ var apod = {
 
   },
 
-  //Application constructor
-  init: function() {
+  buildDOM: function(result){
+
+    $('#apodTitle').text(result.title);
+
+    if(result.media_type === 'video') {
+      $("#apodImg").hide();
+      $("#apodVideo > iframe").attr("src", result.url).show();
+    }else{
+      $("#apodVideo").hide();
+      $("#apodImg").attr("src", result.url).attr('alt', result.title).show();
+    }
+
+    $('#apodCopyright').text(result.copyright);
+    $('#apodDate').text(result.date);
+    $('#apodDesc').text(result.explanation);
+  },
+
+  getRequest: function(){
+    let _this = this;
     let date = this.randomDate(new Date(1995, 5, 16), new Date());
 
     var url = "https://api.nasa.gov/planetary/apod?api_key="
@@ -35,26 +52,21 @@ var apod = {
     $.ajax({
       url:url
     }).done(function(result){
-
-      $('#apodTitle').text(result.title);
-
-      if(result.media_type === 'video') {
-        $("#apodImg").hide();
-        $("#apodVideo > iframe").attr("src", result.url).show();
-      }else{
-        $("#apodVideo").hide();
-        $("#apodImg").attr("src", result.url).attr('alt', result.title).show();
-      }
-
-      $('#apodCopyright').text(result.copyright);
-      $('#apodDate').text(result.date);
-      $('#apodDesc').text(result.explanation);
-
+      _this.buildDOM(result);
     }).fail(function(result){
       console.log(result);
     });
-
+  },
+  //Application constructor
+  init: function() {
+    this.getRequest();
   }
 };
 
 apod.init();
+
+$(function(){
+  $('#btnRandom').on('click',function(){
+    apod.getRequest();
+  });
+});
