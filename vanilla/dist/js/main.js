@@ -55,7 +55,7 @@ var apod = {
       + '&date=' + date;
 
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);
+      xhr.open('GET', url);
       xhr.send();
 
       xhr.onload = function () {
