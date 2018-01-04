@@ -76,8 +76,8 @@ var apod = {
 
 apod.init();
 
-$(function(){
-  $('#btnRandom').on('click',function(){
+(function() {
+  document.getElementById('btnRandom').addEventListener('click',function(){
     apod.getRequest();
   });
-});
+})();
