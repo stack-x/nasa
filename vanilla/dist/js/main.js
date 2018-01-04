@@ -29,7 +29,7 @@ var apod = {
     document.getElementById('apodTitle').innerHTML = result.title;
 
     if(result.media_type === 'video') {
-      document.getElementById("apodImg").style="display:hide";
+      document.getElementById("apodImg").style = "display:hide";
       document.querySelector("#apodVideo > iframe").setAttribute("src", result.url).style = "display:show";
     }else{
       let img =   document.getElementById("apodImg");
@@ -62,6 +62,7 @@ var apod = {
         if(xhr.status === 200){
           _this.buildDOM(JSON.parse(xhr.response));
         }else{
+
           console.log(xhr);
         }
       };
